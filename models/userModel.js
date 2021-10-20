@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
-let { PASSWORD } = process.env
+// let { PASSWORD } = //process.env
+let PASSWORD;
+//deployed
+if(process.env.PASSWORD){
+    PASSWORD = process.env.PASSWORD;
+}
+else{
+    //local
+    PASSWORD = require("../secrets").PASSWORD;
+}
+
 const validator = require("email-validator");
 
 // let dbLink = `mongodb+srv://admin:${PASSWORD}@cluster0.y9gic.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
