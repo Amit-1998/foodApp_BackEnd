@@ -57,7 +57,11 @@ async function loginUser(req, res){
         console.log(user);
         if (user) {
             // password
-                if (user.password == password) {
+             // not need to check by if(user.password == password)
+            // apne aap decrypt ho raha hai hash hua password, compare mein
+                let areEqual = await bcrypt.compare(password, user.password); // here password is which user provides while login & user.password is hash hua BE mein saved password
+
+                if (areEqual) {
                     let token = jwt.sign({ id: user["_id"] }, JWT_SECRET)
                     res.cookie("JWT", token);
                     res.status(200).json({

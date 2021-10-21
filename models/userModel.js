@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcrypt");
 // let { PASSWORD } = //process.env
 let PASSWORD;
 //deployed
@@ -74,13 +74,19 @@ const userSchema = new mongoose.Schema({
 // hook
 userSchema.pre('save',function(next){
    // do stuff
+   const salt = await bcrypt.genSalt(10); // random text dega-> more the value of salt ,more time it takes to encrypt the plaintext
+   // password convert into some text and save into DB
+   this.password = await bcrypt.hash(this.password, salt); //password jo user ne put kra the vo ab change ho chuka hai 
    this.confirmPassword = undefined;
    next();
 });
 
 // document method
 userSchema.methods.resetHandler = function(password, confirmPassword){
-    this.password = password;
+    // reset password karte vakt bhi to hame usey hash kra ke save krana hoga
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    
     this.confirmPassword = confirmPassword;
     this.token = undefined;
 }

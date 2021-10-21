@@ -14,6 +14,13 @@ const reviewRouter = require("./Routers/reviewRouter");
 const bookingRouter = require("./Routers/bookingRouter");
 // let userModel = require("./models/userModel");
 
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require('express-mongo-sanitize');
+
+
 // Server: // route  -> request -> response/file 
 // File system// path -> interact/type -> file /folder
 // server init
@@ -25,6 +32,23 @@ const app = express();
 //     console.log("before", body);
 //     next();
 // })
+
+//  apply to all requests -> sabhi requests se pehle likho
+app.use(rateLimit({
+    max: 100, // limit each IP to 100 requests per windowMs // start blocking after 100 requests
+    windowMs: 15*60*1000, // 15 minutes
+    message:
+    "Too many accounts created from this IP, please try again after an hour"
+}))
+
+// extra param na ho inke alawa
+app.use(hpp({
+    whitelist:['select', 'page', 'sort', 'myquery']
+}))
+
+// to set http headers
+app.use(helmet());
+
 // inbuilt menthods of express has next already implmeneted
 // always use me
 //  express json -> req.body add
@@ -32,6 +56,11 @@ const app = express();
 app.use(express.static("Frontend_folder")); // yha se saari files serve hoti hai
 app.use(express.json());
 app.use(cookieParser());
+
+// cross site scripting
+app.use(xss());
+// mongodb query sanitize
+app.use(mongoSanitize());
 
 // // function -> route  path
 // // frontend -> req -> /
