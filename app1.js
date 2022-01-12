@@ -1,6 +1,7 @@
 // npm init -y
 // npm i express
 const express = require("express");
+const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
@@ -32,7 +33,7 @@ const app = express();
 //     console.log("before", body);
 //     next();
 // })
-
+app.use(cors());
 //  apply to all requests -> sabhi requests se pehle likho
 app.use(rateLimit({
     max: 100, // limit each IP to 100 requests per windowMs // start blocking after 100 requests
