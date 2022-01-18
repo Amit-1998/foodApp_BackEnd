@@ -26,8 +26,10 @@ const mongoSanitize = require('express-mongo-sanitize');
 // File system// path -> interact/type -> file /folder
 // server init
 const app = express();
+// for rectifying the cors error
+// or we can use app.use(cors());
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "*"); // "*" ki jagah we can put deployed foodie BE link
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
