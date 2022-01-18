@@ -83,7 +83,7 @@ app.use(mongoSanitize());
 // const userRouter = express.Router();
 // const authRouter = express.Router();
 // // localhost / auth / 10-> patch
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 app.use("/api/plan", planRouter);
 app.use('/api/auth', authRouter);
 app.use("/api/review", reviewRouter);
