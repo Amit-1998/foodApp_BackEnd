@@ -33,7 +33,9 @@ const app = express();
 //     console.log("before", body);
 //     next();
 // })
-app.use(cors());
+app.use(cors({origin:"https://amit-1998.github.io"}));
+app.use(express.json());
+app.use(cookieParser());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -65,8 +67,7 @@ app.use(helmet());
 //  express json -> req.body add
 // reserve a folder only from which client can acces the files 
 app.use(express.static("Frontend_folder")); // yha se saari files serve hoti hai
-app.use(express.json());
-app.use(cookieParser());
+
 
 // cross site scripting
 app.use(xss());
