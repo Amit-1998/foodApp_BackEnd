@@ -26,16 +26,6 @@ const mongoSanitize = require('express-mongo-sanitize');
 // File system// path -> interact/type -> file /folder
 // server init
 const app = express();
-// this line 
-// post -> /
-// app.post("/", function (req, res, next) {
-//     let body = req.body;
-//     console.log("before", body);
-//     next();
-// })
-app.use(cors({origin:"https://amit-1998.github.io"}));
-app.use(express.json());
-app.use(cookieParser());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -45,6 +35,17 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
     next();
   });
+// this line 
+// post -> /
+// app.post("/", function (req, res, next) {
+//     let body = req.body;
+//     console.log("before", body);
+//     next();
+// })
+
+app.use(express.json());
+app.use(cookieParser());
+
   
 //  apply to all requests -> sabhi requests se pehle likho
 app.use(rateLimit({
