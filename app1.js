@@ -34,6 +34,16 @@ const app = express();
 //     next();
 // })
 app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
+    next();
+  });
+  
 //  apply to all requests -> sabhi requests se pehle likho
 app.use(rateLimit({
     max: 100, // limit each IP to 100 requests per windowMs // start blocking after 100 requests
