@@ -72,7 +72,7 @@ const userSchema = new mongoose.Schema({
 })
 
 // hook
-userSchema.pre('save',function(next){
+userSchema.pre('save',async function(next){
    // do stuff
    const salt = await bcrypt.genSalt(10); // random text dega-> more the value of salt ,more time it takes to encrypt the plaintext
    // password convert into some text and save into DB
@@ -82,7 +82,7 @@ userSchema.pre('save',function(next){
 });
 
 // document method
-userSchema.methods.resetHandler = function(password, confirmPassword){
+userSchema.methods.resetHandler = async function(password, confirmPassword){
     // reset password karte vakt bhi to hame usey hash kra ke save krana hoga
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
